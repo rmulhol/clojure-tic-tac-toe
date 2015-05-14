@@ -1,8 +1,8 @@
 (ns tic-tac-toe.rules
-  (:require [tic-tac-toe.board :as Board]))
+  (:require [tic-tac-toe.board :as board]))
 
 (defn winning-combinations [board]
-  (concat (Board/rows board) (Board/columns board) (Board/diagonals board)))
+  (concat (board/rows board) (board/columns board) (board/diagonals board)))
 
 (defn player-controls-combination? [move-signature combo board]
   (loop [amount-of-combo-claimed 0
@@ -24,5 +24,5 @@
   (cond
     (player-wins? player-1 board) true
     (player-wins? player-2 board) true
-    (Board/board-full? board) true
+    (board/full? board) true
     :else false))

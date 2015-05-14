@@ -1,6 +1,6 @@
 (ns tic-tac-toe.board)
 
-(defn generate-board [side-length]
+(defn generate [side-length]
   (vec (range 1 (+ (* side-length side-length) 1))))
 
 (defn place-move [board move-signature space]
@@ -12,7 +12,7 @@
 (defn open-spaces [board]
   (filter #(number? %) board))
 
-(defn board-full? [board]
+(defn full? [board]
   (not-any? #(number? %) board))
 
 (defn rows [board]
