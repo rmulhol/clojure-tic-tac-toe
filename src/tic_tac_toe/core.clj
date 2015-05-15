@@ -17,5 +17,3 @@
           (io/output (messages/game-over))
         ai-turn? (recur (board/place-move board "O" (ai/get-move "O" board)) false)
         :else (recur (board/place-move board "X" (io/prompt-move board)) true)))))
-
-

@@ -13,7 +13,7 @@
 
 (defn minimax [board my-turn? move-signature opponent depth]
   (let [open-spaces (board/open-spaces board)]
-    (if(rules/game-over? board move-signature opponent)
+    (if (rules/game-over? board move-signature opponent)
       (/ (score-board board move-signature opponent) depth)
       (if my-turn?
         (apply max (map #(minimax (board/place-move board move-signature %) 
@@ -26,10 +26,10 @@
     (loop [open-spaces (board/open-spaces board)
            best-move nil
            best-score -100]
-      (if(empty? open-spaces)
+      (if (empty? open-spaces)
         best-move
         (let [score (minimax (board/place-move board move-signature 
                              (first open-spaces)) false move-signature opponent 1)]
-          (if(> score best-score)
+          (if (> score best-score)
             (recur (rest open-spaces) (first open-spaces) score)
             (recur (rest open-spaces) best-move best-score)))))))
