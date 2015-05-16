@@ -4,14 +4,11 @@
 
 (defn read-move [board]
   (try
-    (let [move (Integer. (read-line))]
+    (let [move (read-line)]
       (if (board/valid-move? board move)
-        move
+        (Integer. move)
         ((println (messages/invalid-move))
-         (read-move board))))
-    (catch java.lang.NumberFormatException e
-      ((println (messages/invalid-move))
-       (read-move board)))))
+         (read-move board))))))
 
 (defn prompt-move [board]
   (println (messages/prompt-move))
@@ -22,4 +19,4 @@
 
 (defn intro []
   (println (messages/game-intro))
-  (read-move [1 2 3 4 5 6 7 8 9]))
+  (read-move [" " " " " " " " " " " " " " " " " "]))

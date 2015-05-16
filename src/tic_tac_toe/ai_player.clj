@@ -3,7 +3,7 @@
             [tic-tac-toe.board :as board]))
 
 (defn get-opponent [move-signature board]
-  (some #(when (and (not (= move-signature %)) (not (number? %))) %) board))
+  (some #(when (and (not (= move-signature %)) (not (= " " %))) %) board))
 
 (defn score-board [board move-signature opponent]
   (cond

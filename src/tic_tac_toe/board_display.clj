@@ -9,9 +9,7 @@
     (str "\n" board-newline "\n")))
 
 (defn convert-space [space]
-  (if (number? space)
-    "   "
-    (str " " space " ")))
+  (str " " space " "))
 
 (defn display [board]
   (let [side-length (int (Math/sqrt (count board)))]

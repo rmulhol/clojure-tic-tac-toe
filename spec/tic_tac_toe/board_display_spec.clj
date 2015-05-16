@@ -18,7 +18,7 @@
 
 (describe "convert-space"
   (it "returns three spaces for an empty cell"
-    (should= "   " (bd/convert-space 1)))
+    (should= "   " (bd/convert-space " ")))
 
   (it "returns the move for a claimed cell"
     (should= " X " (bd/convert-space "X"))))
@@ -30,7 +30,7 @@
 -----------
    |   |   
 -----------
-   |   |   " (bd/display [1 2 3 4 5 6 7 8 9])))
+   |   |   " (bd/display [" " " " " " " " " " " " " " " " " "])))
   
   (it "constructs a board string from a board with moves"
     (should= "
@@ -38,4 +38,4 @@
 -----------
    |   |   
 -----------
-   |   |   " (bd/display ["X" "O" 3 4 5 6 7 8 9]))))
+   |   |   " (bd/display ["X" "O" " " " " " " " " " " " " " "]))))

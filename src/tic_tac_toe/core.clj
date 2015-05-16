@@ -8,7 +8,7 @@
 
 (defn -main []
   (let [first-move (io/intro)
-        board (board/place-move [1 2 3 4 5 6 7 8 9] "X" first-move)]
+        board (board/place-move (board/generate 3) "X" first-move)]
     (loop [board board
            ai-turn? true]
       (io/output (bd/display board))
