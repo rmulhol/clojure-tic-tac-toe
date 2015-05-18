@@ -3,10 +3,18 @@
             [tic-tac-toe.io :as io]))
 
 (describe "read-move"
+  (around [it]
+    (with-out-str (it)))
+
   (it "converts valid input to an int"
     (should= 1
       (with-in-str "1"
-        (io/read-move [" " " " " " " " " " " " " " " " " "])))))
+        (io/read-move [" " " " " " " " " " " " " " " " " "] true))))
+  
+  (it "rejects invalid input until valid input is given"
+    (should= 1
+      (with-in-str "invalid input\n2\n1\n"
+        (io/read-move [" " "X" " " " " " " " " " " " " " "] true)))))
 
 (describe "prompt-move"
   (it "prompts the user to make a move"
