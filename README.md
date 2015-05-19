@@ -10,4 +10,4 @@ Clojure 1.6.0, Leiningen 2.5.1 on Java 1.8.0, Speclj 3.2.0
 Check back later when it runs. Will likely be `lein run`, though.
 
 ##How to Test
-No tests yet, but will likely be `lein spec`.
+`lein spec`
