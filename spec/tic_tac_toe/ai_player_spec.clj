@@ -18,19 +18,19 @@
 
 (describe "minimax"
   (it "scores a win as 10"
-    (should= 10 (ai/minimax ["X" "X" "X" 4 5 6 7 8 9] false "X" "O")))
+    (should= 10 (ai/minimax ["X" "X" "X" 4 5 6 7 8 9] false "X" "O" 1)))
 
   (it "scores a loss as -10"
-    (should= -10 (ai/minimax ["O" "O" "O" 4 5 6 7 8 9] true "X" "O")))
+    (should= -10 (ai/minimax ["O" "O" "O" 4 5 6 7 8 9] true "X" "O" 1)))
   
   (it "scores a tie as 0"
-    (should= 0 (ai/minimax ["X" "O" "X" "O" "X" "O" "O" "X" "O"] true "X" "O")))
+    (should= 0 (ai/minimax ["X" "O" "X" "O" "X" "O" "O" "X" "O"] true "X" "O" 1)))
   
-  (it "what selects the winner with multiple options available"
-    (should= 10 (ai/minimax ["O" "O" "X" "O" "O" "X" 7 8 9] true "X" "O")))
+  (it "selects a winner when multiple options available"
+    (should= 5 (ai/minimax ["O" "O" "X" "O" "O" "X" 7 8 9] true "X" "O" 1)))
 
   (it "acknowledges a loss with no chance to block"
-    (should= -10 (ai/minimax ["O" "O" "X" "O" "O" "X" 7 8 9] false "X" "O"))))
+    (should= -5 (ai/minimax ["O" "O" "X" "O" "O" "X" 7 8 9] false "X" "O" 1))))
   
 (describe "get-move"
   (it "claims a win"
