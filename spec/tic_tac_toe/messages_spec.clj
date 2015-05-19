@@ -24,6 +24,11 @@ When you're ready, choose a move." (messages/game-intro))))
   (it "notifies the user their selection is invalid, prompts to try again"
     (should= "Invalid selection. Try again." (messages/invalid-move))))
 
-(describe "game-over"
-  (it "notifieis the user the game is over"
-    (should= "Aaaaaand the game is over!" (messages/game-over))))
+(describe "announce-winner"
+  (it "declares the game winner"
+    (should= "Player X wins!" (messages/announce-winner "X"))
+    (should= "Player O wins!" (messages/announce-winner "O"))))
+
+(describe "announce-tie"
+  (it "declares the game ends in a tie"
+    (should= "Tie game!" (messages/announce-tie))))

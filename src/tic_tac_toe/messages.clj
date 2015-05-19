@@ -19,5 +19,8 @@ When you're ready, choose a move.")
 (defn invalid-move []
   "Invalid selection. Try again.")
 
-(defn game-over []
-  "Aaaaaand the game is over!")
+(defn announce-winner [piece]
+  (str "Player " piece " wins!"))
+
+(defn announce-tie []
+  "Tie game!")

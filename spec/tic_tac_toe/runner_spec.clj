@@ -3,7 +3,12 @@
             [tic-tac-toe.runner :as runner]))
 
 (describe "play"
-  (it "runs through a HvC game"
-    (should-contain "Aaaaaand the game is over!"
+  (it "runs through a HvC game where computer wins"
+    (should-contain "Player O wins!"
       (with-out-str (with-in-str "1\n9\n3\n"
+        (runner/play)))))
+  
+  (it "runs through a HvC game where players tie"
+    (should-contain "Tie game!"
+      (with-out-str (with-in-str "1\n9\n8\n3\n4\n"
         (runner/play))))))

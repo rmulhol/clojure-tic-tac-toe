@@ -14,6 +14,6 @@
       (io/output (bd/display board))
       (cond
         (rules/game-over? board "X" "O")
-          (io/output (messages/game-over))
+          (io/announce-result board "X" "O")
         ai-turn? (recur (board/place-move board "O" (ai/get-move "O" board)) false)
         :else (recur (board/place-move board "X" (io/prompt-move board)) true)))))

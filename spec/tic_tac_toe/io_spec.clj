@@ -52,3 +52,16 @@ When you're ready, choose a move.\n"
     (should= 1 
       (with-in-str "1"
         (io/intro)))))
+
+(describe "announce-result"
+  (it "announces a win for X"
+    (should= "Player X wins!\n"
+      (with-out-str (io/announce-result ["X" "X" "X" " " " " " " " " " " " "] "X" "O"))))
+
+  (it "announces a win for O"
+    (should= "Player O wins!\n"
+      (with-out-str (io/announce-result ["O" "O" "O" " " " " " " " " " " " "] "X" "O"))))
+
+  (it "announces a tie game"
+    (should= "Tie game!\n"
+      (with-out-str (io/announce-result ["X" "O" "X" "O" "X" "O" "O" "X" "O"] "X" "O")))))
