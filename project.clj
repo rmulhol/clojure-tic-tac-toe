@@ -6,4 +6,5 @@
   :dependencies [[org.clojure/clojure "1.6.0"]]
   :profiles {:dev {:dependencies [[speclj "3.2.0"]]}}
   :plugins [[speclj "3.2.0"]]
+  :main tic-tac-toe.core
   :test-paths ["spec"])
