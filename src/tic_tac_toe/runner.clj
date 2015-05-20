@@ -7,13 +7,15 @@
             [tic-tac-toe.board-display :as bd]))
 
 (defn play []
-  (let [first-move (io/intro)
-        board (board/place-move (board/generate 3) "X" first-move)]
-    (loop [board board
-           ai-turn? true]
+  (io/output (messages/game-intro))
+  (let [player-1 (io/prompt-move-signature "1")
+        player-2 (io/prompt-move-signature "2")]
+    (loop [board (board/generate 3)
+           ai-turn? false]
       (io/output (bd/display board))
       (cond
-        (rules/game-over? board "X" "O")
-          (io/announce-result board "X" "O")
-        ai-turn? (recur (board/place-move board "O" (ai/get-move "O" board)) false)
-        :else (recur (board/place-move board "X" (io/prompt-move board)) true)))))
+        (rules/game-over? board player-1 player-2)
+          (io/announce-result board player-1 player-2)
+        ai-turn? 
+          (recur (board/place-move board player-2 (ai/get-move player-2 board)) false)
+        :else (recur (board/place-move board player-1 (io/prompt-move board)) true)))))

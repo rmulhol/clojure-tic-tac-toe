@@ -2,6 +2,36 @@
   (:require [speclj.core :refer :all]
             [tic-tac-toe.io :as io]))
 
+(describe "read-move-signature"
+  (around [it]
+    (with-out-str (it)))
+
+  (it "returns valid input"
+    (should= "X"
+      (with-in-str "X"
+        (io/read-move-signature true))))
+  
+  (it "rejects invalid input until valid input is given"
+    (should= "X"
+      (with-in-str "OO\n \nX"
+        (io/read-move-signature true))))
+  
+  (it "notifies the user of invalid input if invalid input is given"
+    (should-contain "Move signature must be one character"
+      (with-out-str (with-in-str "OO\n \nX"
+        (io/read-move-signature true)))))
+  
+  (it "does not notify the user of invalid input if input is valid"
+    (should-not-contain "Move signature must be one character"
+      (with-out-str (with-in-str "X"
+        (io/read-move-signature true))))))
+
+(describe "prompt-move-signature"
+  (it "prompts the user to enter a move signature"
+    (should-contain "What will be the move signature for player 1?\n"
+      (with-out-str (with-in-str "X"
+        (io/prompt-move-signature "1"))))))
+
 (describe "read-move"
   (around [it]
     (with-out-str (it)))
@@ -27,31 +57,6 @@
     (should= "Hello\n"
       (with-out-str 
         (io/output "Hello")))))
-
-(describe "intro"
-
-  (around [it]
-    (with-out-str (it)))
-
-  (it "introduces the game"
-    (should= "Welcome to Tic Tac Toe!
-
-The board is formatted like so:
-
- 1 | 2 | 3
------------
- 4 | 5 | 6
------------
- 7 | 8 | 9
-
-When you're ready, choose a move.\n"
-      (with-out-str (with-in-str "1"
-        (io/intro)))))
-
-  (it "returns the move entered by the user"
-    (should= 1 
-      (with-in-str "1"
-        (io/intro)))))
 
 (describe "announce-result"
   (it "announces a win for X"

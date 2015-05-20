@@ -11,7 +11,13 @@ The board is formatted like so:
 -----------
  7 | 8 | 9
 
-When you're ready, choose a move.")
+")
+
+(defn request-move-signature [player]
+  (str "What will be the move signature for player " player "?"))
+
+(defn invalid-move-signature []
+  "Move signature must be one character. Try again.")
 
 (defn prompt-move []
   "Pick your next move: ")

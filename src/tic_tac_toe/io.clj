@@ -1,7 +1,20 @@
 (ns tic-tac-toe.io
   (:require [tic-tac-toe.board :as board]
             [tic-tac-toe.messages :as messages]
-            [tic-tac-toe.rules :as rules]))
+            [tic-tac-toe.rules :as rules]
+            [tic-tac-toe.config :as config]))
+
+(defn read-move-signature [first-attempt?]
+  (when (not first-attempt?)
+    (println (messages/invalid-move-signature)))
+  (let [move-signature (read-line)]
+    (if (config/valid-move-signature? move-signature)
+      move-signature
+      (recur false))))
+
+(defn prompt-move-signature [player]
+  (println (messages/request-move-signature player))
+  (read-move-signature true))
 
 (defn read-move [board first-attempt?]
   (when (not first-attempt?)
@@ -17,10 +30,6 @@
 
 (defn output [message]
   (println message))
-
-(defn intro []
-  (println (messages/game-intro))
-  (read-move [" " " " " " " " " " " " " " " " " "] true))
 
 (defn announce-result [board player-1 player-2]
   (cond

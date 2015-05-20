@@ -14,7 +14,17 @@ The board is formatted like so:
 -----------
  7 | 8 | 9
 
-When you're ready, choose a move." (messages/game-intro))))
+" (messages/game-intro))))
+
+(describe "request-move-signature"
+  (it "prompts the user to enter a move-signature for the passed player"
+    (should= "What will be the move signature for player 1?"
+             (messages/request-move-signature "1"))))
+
+(describe "invalid-move-signature"
+  (it "notifies the user their input is invalid, prompts to try again"
+    (should= "Move signature must be one character. Try again."
+             (messages/invalid-move-signature))))
 
 (describe "prompt-move"
   (it "prompts the user to select their next move"
