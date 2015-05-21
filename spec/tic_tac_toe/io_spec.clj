@@ -2,6 +2,36 @@
   (:require [speclj.core :refer :all]
             [tic-tac-toe.io :as io]))
 
+(describe "read-player-identity"
+  (around [it]
+    (with-out-str (it)))
+
+  (it "returns player identity for valid input"
+    (should= :human
+      (with-in-str "human"
+        (io/read-player-identity))))
+  
+  (it "rejects invalid input until valid input is given"
+    (should= :human
+      (with-in-str "invalid input\n \nhuman"
+        (io/read-player-identity))))
+  
+  (it "notifies the user of invalid input if invalid input is given"
+    (should-contain "Player identity must be either Human or AI"
+      (with-out-str (with-in-str "invalid input\n \nhuman"
+        (io/read-player-identity)))))
+  
+  (it "does not notify the user of invalid input if no invalid input is received"
+    (should-not-contain "Player identity must be either Human or AI"
+      (with-out-str (with-in-str "human"
+        (io/read-player-identity))))))
+
+(describe "prompt-player-identity"
+  (it "prompts the user to enter a player identity"
+    (should-contain "What will be the identity for player 1?"
+                    (with-out-str (with-in-str "Human"
+                      (io/prompt-player-identity "1"))))))
+
 (describe "read-move-signature"
   (around [it]
     (with-out-str (it)))
@@ -31,6 +61,20 @@
     (should-contain "What will be the move signature for player 1?\n"
       (with-out-str (with-in-str "X"
         (io/prompt-move-signature "1"))))))
+
+(describe "create-player"
+  (around [it]
+    (with-out-str (it)))
+
+  (it "constructs a player from valid input"
+    (should= { :identity :human, :move-signature "X" }
+             (with-in-str "human\nX"
+               (io/create-player "1"))))
+  
+  (it "cycles through invalid input until valid input is given"
+    (should= { :identity :human, :move-signature "X" }
+             (with-in-str "invalid input\nhuman\ninvalid input\nX"
+               (io/create-player "1")))))
 
 (describe "read-move"
   (around [it]

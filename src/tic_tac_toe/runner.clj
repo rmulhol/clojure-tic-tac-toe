@@ -8,14 +8,16 @@
 
 (defn play []
   (io/output (messages/game-intro))
-  (let [player-1 (io/prompt-move-signature "1")
-        player-2 (io/prompt-move-signature "2")]
+  (let [player-1 (io/create-player "1")
+        player-2 (io/create-player "2")]
     (loop [board (board/generate 3)
-           ai-turn? false]
+           current-player player-1
+           opponent player-2]
       (io/output (bd/display board))
       (cond
-        (rules/game-over? board player-1 player-2)
-          (io/announce-result board player-1 player-2)
-        ai-turn? 
-          (recur (board/place-move board player-2 (ai/get-move player-2 board)) false)
-        :else (recur (board/place-move board player-1 (io/prompt-move board)) true)))))
+        (rules/game-over? board (player-1 :move-signature) (player-2 :move-signature))
+          (io/announce-result board (player-1 :move-signature) (player-2 :move-signature))
+        (= :ai (current-player :identity))
+          (recur (board/place-move board (current-player :move-signature) (ai/get-move (current-player :move-signature) board)) opponent current-player)
+        :else 
+          (recur (board/place-move board (current-player :move-signature) (io/prompt-move board)) opponent current-player)))))

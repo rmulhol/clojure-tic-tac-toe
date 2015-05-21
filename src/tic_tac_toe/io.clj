@@ -4,6 +4,19 @@
             [tic-tac-toe.rules :as rules]
             [tic-tac-toe.config :as config]))
 
+(defn read-player-identity []
+  (loop [first-attempt? true]
+    (when (not first-attempt?)
+      (println (messages/invalid-player-identity)))
+    (let [player-identity (read-line)]
+      (if (config/valid-player-identity? player-identity)
+        (config/player-identity player-identity)
+        (recur false)))))
+
+(defn prompt-player-identity [player]
+  (println (messages/request-player-identity player))
+  (read-player-identity))
+
 (defn read-move-signature [first-attempt?]
   (when (not first-attempt?)
     (println (messages/invalid-move-signature)))
@@ -15,6 +28,11 @@
 (defn prompt-move-signature [player]
   (println (messages/request-move-signature player))
   (read-move-signature true))
+
+(defn create-player [player]
+  (let [player-identity (prompt-player-identity player)
+        move-signature (prompt-move-signature player)]
+    { :identity player-identity, :move-signature move-signature }))
 
 (defn read-move [board first-attempt?]
   (when (not first-attempt?)

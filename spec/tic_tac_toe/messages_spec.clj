@@ -26,6 +26,16 @@ The board is formatted like so:
     (should= "Move signature must be one character. Try again."
              (messages/invalid-move-signature))))
 
+(describe "request-player-identity"
+  (it "prompts the user to enter an identity for the passed player"
+    (should= "What will be the identity for player 1? Please enter either Human or AI."
+             (messages/request-player-identity "1"))))
+
+(describe "invalid-player-identity"
+  (it "notifies the user their input is invalid, prompts to try again"
+    (should= "Player identity must be either Human or AI. Try again."
+             (messages/invalid-player-identity))))
+
 (describe "prompt-move"
   (it "prompts the user to select their next move"
     (should= "Pick your next move: " (messages/prompt-move))))

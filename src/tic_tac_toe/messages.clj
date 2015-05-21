@@ -19,6 +19,12 @@ The board is formatted like so:
 (defn invalid-move-signature []
   "Move signature must be one character. Try again.")
 
+(defn request-player-identity [player]
+  (str "What will be the identity for player " player "? Please enter either Human or AI."))
+
+(defn invalid-player-identity []
+  "Player identity must be either Human or AI. Try again.")
+
 (defn prompt-move []
   "Pick your next move: ")
 
