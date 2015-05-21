@@ -39,28 +39,40 @@
   (it "returns valid input"
     (should= "X"
       (with-in-str "X"
-        (io/read-move-signature true))))
+        (io/read-move-signature true ""))))
   
   (it "rejects invalid input until valid input is given"
     (should= "X"
       (with-in-str "OO\n \nX"
-        (io/read-move-signature true))))
+        (io/read-move-signature true ""))))
+
+  (it "rejects forbidden move signatures until an available move signature is chosen"
+    (should= "O" (with-in-str "X\nO" (io/read-move-signature true "X"))))
   
   (it "notifies the user of invalid input if invalid input is given"
     (should-contain "Move signature must be one character"
       (with-out-str (with-in-str "OO\n \nX"
-        (io/read-move-signature true)))))
+        (io/read-move-signature true "")))))
   
   (it "does not notify the user of invalid input if input is valid"
     (should-not-contain "Move signature must be one character"
       (with-out-str (with-in-str "X"
-        (io/read-move-signature true))))))
+        (io/read-move-signature true ""))))))
 
 (describe "prompt-move-signature"
+  (around [it]
+    (with-out-str (it)))
+
   (it "prompts the user to enter a move signature"
     (should-contain "What will be the move signature for player 1?\n"
       (with-out-str (with-in-str "X"
-        (io/prompt-move-signature "1"))))))
+        (io/prompt-move-signature "1" "")))))
+  
+  (it "returns the valid move signature selected by the player"
+    (should= "X" (with-in-str "X" (io/prompt-move-signature "1" ""))))
+
+  (it "rejects forbidden move signatures until an allowed move signature is selected"
+    (should= "O" (with-in-str "X\nO" (io/prompt-move-signature "1" "X")))))
 
 (describe "create-player"
   (around [it]
@@ -69,12 +81,17 @@
   (it "constructs a player from valid input"
     (should= { :identity :human, :move-signature "X" }
              (with-in-str "human\nX"
-               (io/create-player "1"))))
+               (io/create-player "1" ""))))
+
+  (it "reserves forbidden move signatures"
+    (should= { :identity :human, :move-signature "O" }
+             (with-in-str "human\nX\nO"
+               (io/create-player "1" "X"))))
   
   (it "cycles through invalid input until valid input is given"
     (should= { :identity :human, :move-signature "X" }
              (with-in-str "invalid input\nhuman\ninvalid input\nX"
-               (io/create-player "1")))))
+               (io/create-player "1" "")))))
 
 (describe "read-move"
   (around [it]

@@ -8,8 +8,8 @@
 
 (defn play []
   (io/output (messages/game-intro))
-  (let [player-1 (io/create-player "1")
-        player-2 (io/create-player "2")]
+  (let [player-1 (io/create-player "1" "")
+        player-2 (io/create-player "2" (player-1 :move-signature))]
     (loop [board (board/generate 3)
            current-player player-1
            opponent player-2]

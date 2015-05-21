@@ -17,21 +17,21 @@
   (println (messages/request-player-identity player))
   (read-player-identity))
 
-(defn read-move-signature [first-attempt?]
+(defn read-move-signature [first-attempt? forbidden-move-signature]
   (when (not first-attempt?)
     (println (messages/invalid-move-signature)))
   (let [move-signature (read-line)]
-    (if (config/valid-move-signature? move-signature)
+    (if (and (config/valid-move-signature? move-signature) (not (= move-signature forbidden-move-signature)))
       move-signature
-      (recur false))))
+      (recur false forbidden-move-signature))))
 
-(defn prompt-move-signature [player]
+(defn prompt-move-signature [player forbidden-move-signature]
   (println (messages/request-move-signature player))
-  (read-move-signature true))
+  (read-move-signature true forbidden-move-signature))
 
-(defn create-player [player]
+(defn create-player [player forbidden-move-signature]
   (let [player-identity (prompt-player-identity player)
-        move-signature (prompt-move-signature player)]
+        move-signature (prompt-move-signature player forbidden-move-signature)]
     { :identity player-identity, :move-signature move-signature }))
 
 (defn read-move [board first-attempt?]

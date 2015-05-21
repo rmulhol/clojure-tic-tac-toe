@@ -23,7 +23,7 @@ The board is formatted like so:
 
 (describe "invalid-move-signature"
   (it "notifies the user their input is invalid, prompts to try again"
-    (should= "Move signature must be one character. Try again."
+    (should= "Move signature must be one character, and two players cannot share one move signature. Try again."
              (messages/invalid-move-signature))))
 
 (describe "request-player-identity"

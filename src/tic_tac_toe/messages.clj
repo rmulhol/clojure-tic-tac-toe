@@ -17,7 +17,7 @@ The board is formatted like so:
   (str "What will be the move signature for player " player "?"))
 
 (defn invalid-move-signature []
-  "Move signature must be one character. Try again.")
+  "Move signature must be one character, and two players cannot share one move signature. Try again.")
 
 (defn request-player-identity [player]
   (str "What will be the identity for player " player "? Please enter either Human or AI."))
