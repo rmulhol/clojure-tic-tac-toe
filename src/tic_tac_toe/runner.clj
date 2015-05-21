@@ -4,7 +4,7 @@
             [tic-tac-toe.ai-player :as ai]
             [tic-tac-toe.io :as io]
             [tic-tac-toe.messages :as messages]
-            [tic-tac-toe.board-display :as bd]
+            [tic-tac-toe.board-presenter :as bp]
             [tic-tac-toe.config :as config]))
 
 (defn play []
@@ -14,7 +14,7 @@
     (loop [board (board/generate 3)
            current-player player-1
            opponent player-2]
-      (io/output (bd/display board))
+      (io/output (bp/display board))
       (cond
         (rules/game-over? board (player-1 :move-signature) (player-2 :move-signature))
           (io/announce-result 

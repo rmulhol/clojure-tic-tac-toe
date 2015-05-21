@@ -1,4 +1,4 @@
-(ns tic-tac-toe.board-display)
+(ns tic-tac-toe.board-presenter)
 
 (defn newline-required? [index side-length]
   (and (= (rem index side-length) 0) (not= index (* side-length side-length))))
