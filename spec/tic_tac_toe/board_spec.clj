@@ -18,17 +18,17 @@
              (board/place-move ["X" " " " " " " " " " " " " " " " "] "X" 1))))
 
 (describe "valid-move?"
-  (it "returns false for a claimed space"
-    (should= false (board/valid-move? ["X" " " " " " " " " " " " " " " " "] 1)))
+  (it "returns a function that returns false for a claimed space"
+    (should= false ((board/valid-move? ["X" " " " " " " " " " " " " " " " "]) 1)))
 
-  (it "returns false for a space that's out of bounds" 
-    (should= false (board/valid-move? (empty-board 3) 99)))
+  (it "returns a function that returns false for a space that's out of bounds" 
+    (should= false ((board/valid-move? (empty-board 3)) 99)))
 
-  (it "returns false for unrecognized input"
-    (should= false (board/valid-move? (empty-board 3) "c")))
+  (it "returns a function that returns false for unrecognized input"
+    (should= false ((board/valid-move? (empty-board 3)) "c")))
 
-  (it "returns true for an unclaimed space"
-    (should= true (board/valid-move? (empty-board 3) 1))))
+  (it "returns a function that returns true for an unclaimed space"
+    (should= true ((board/valid-move? (empty-board 3)) 1))))
 
 (describe "open-space"
   (it "returns false if space is claimed"

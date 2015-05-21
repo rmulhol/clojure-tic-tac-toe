@@ -14,13 +14,15 @@ The board is formatted like so:
 ")
 
 (defn request-move-signature [player]
-  (str "What will be the move signature for player " player "?"))
+  (fn [] 
+    (str "What will be the move signature for player " player "?")))
 
 (defn invalid-move-signature []
   "Move signature must be one character, and two players cannot share one move signature. Try again.")
 
 (defn request-player-identity [player]
-  (str "What will be the identity for player " player "? Please enter either Human or AI."))
+  (fn []
+    (str "What will be the identity for player " player "? Please enter either Human or AI.")))
 
 (defn invalid-player-identity []
   "Player identity must be either Human or AI. Try again.")

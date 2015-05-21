@@ -6,13 +6,14 @@
 (defn place-move [board move-signature space]
   (assoc board (dec space) move-signature))
 
-(defn valid-move? [board space]
-  (try
-    (= (board (dec (Integer. space))) " ")
-    (catch java.lang.IndexOutOfBoundsException e
-      false)
-    (catch java.lang.NumberFormatException e
-      false)))
+(defn valid-move? [board]
+  (fn [move]
+    (try
+      (= (board (dec (Integer. move))) " ")
+      (catch java.lang.IndexOutOfBoundsException e
+        false)
+      (catch java.lang.NumberFormatException e
+        false))))
 
 (defn board-indexes [board]
   (range 1 (inc (count board))))

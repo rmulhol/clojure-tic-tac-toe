@@ -1,56 +1,33 @@
 (ns tic-tac-toe.io
   (:require [tic-tac-toe.board :as board]
             [tic-tac-toe.messages :as messages]
-            [tic-tac-toe.rules :as rules]
-            [tic-tac-toe.config :as config]))
-
-(defn read-player-identity []
-  (loop [first-attempt? true]
-    (when (not first-attempt?)
-      (println (messages/invalid-player-identity)))
-    (let [player-identity (read-line)]
-      (if (config/valid-player-identity? player-identity)
-        (config/player-identity player-identity)
-        (recur false)))))
-
-(defn prompt-player-identity [player]
-  (println (messages/request-player-identity player))
-  (read-player-identity))
-
-(defn read-move-signature [first-attempt? forbidden-move-signature]
-  (when (not first-attempt?)
-    (println (messages/invalid-move-signature)))
-  (let [move-signature (read-line)]
-    (if (and (config/valid-move-signature? move-signature) (not (= move-signature forbidden-move-signature)))
-      move-signature
-      (recur false forbidden-move-signature))))
-
-(defn prompt-move-signature [player forbidden-move-signature]
-  (println (messages/request-move-signature player))
-  (read-move-signature true forbidden-move-signature))
-
-(defn create-player [player forbidden-move-signature]
-  (let [player-identity (prompt-player-identity player)
-        move-signature (prompt-move-signature player forbidden-move-signature)]
-    { :identity player-identity, :move-signature move-signature }))
-
-(defn read-move [board first-attempt?]
-  (when (not first-attempt?)
-    (println (messages/invalid-move)))
-  (let [move (read-line)]
-    (if (board/valid-move? board move)
-      (Integer. move)
-      (read-move board false))))
-
-(defn prompt-move [board]
-  (println (messages/prompt-move))
-  (read-move board true))
+            [tic-tac-toe.rules :as rules]))
 
 (defn output [message]
   (println message))
 
+(defn prompt-with-condition [prompt condition error-message]
+  (loop [first-attempt? true]
+    (if first-attempt?
+      (output (prompt))
+      (output (error-message)))
+    (let [input (read-line)]
+      (if (condition input)
+        input
+        (recur false)))))
+
+(defn get-move [board]
+  (Integer.
+    (prompt-with-condition
+      messages/prompt-move
+      (board/valid-move? board)
+      messages/invalid-move)))
+
 (defn announce-result [board player-1 player-2]
   (cond
-    (rules/player-wins? player-1 board) (output (messages/announce-winner player-1))
-    (rules/player-wins? player-2 board) (output (messages/announce-winner player-2))
-    :else (output (messages/announce-tie))))
+    (rules/player-wins? player-1 board) 
+      (output (messages/announce-winner player-1))
+    (rules/player-wins? player-2 board) 
+      (output (messages/announce-winner player-2))
+    :else 
+      (output (messages/announce-tie))))
