@@ -1,6 +1,8 @@
 (ns tic-tac-toe.ai-player
   (:require [tic-tac-toe.rules :as rules]
-            [tic-tac-toe.board :as board]))
+            [tic-tac-toe.board :as board])
+  (:gen-class
+    :methods [#^{:static true} [getMove [String java.util.ArrayList] int]]))
 
 (defn get-opponent [move-signature board]
   (some #(when (and (not (= move-signature %)) (not (= " " %))) %) board))
@@ -33,3 +35,6 @@
           (if (> score best-score)
             (recur (rest open-spaces) (first open-spaces) score)
             (recur (rest open-spaces) best-move best-score)))))))
+
+(defn -getMove [move-signature board]
+  (get-move move-signature (into [] board)))
